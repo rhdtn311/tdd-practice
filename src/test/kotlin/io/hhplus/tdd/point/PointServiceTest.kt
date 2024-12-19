@@ -1,8 +1,5 @@
 package io.hhplus.tdd.point
 
-import io.hhplus.tdd.point.model.PointHistory
-import io.hhplus.tdd.point.model.TransactionType
-import io.hhplus.tdd.point.model.UserPoint
 import io.hhplus.tdd.point.port.PointHistoryPort
 import io.hhplus.tdd.point.port.UserPointPort
 import org.assertj.core.api.Assertions
@@ -199,5 +196,4 @@ class PointServiceTest {
                 .hasMessage("사용하려는 포인트는 0보다 커야 합니다.")
         }
     }
-
 }
