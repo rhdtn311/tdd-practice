@@ -132,4 +132,72 @@ class PointServiceTest {
                 .hasMessage("총 포인트는 1000보다 많을 수 없습니다.")
         }
     }
+
+    @Nested
+    @DisplayName("포인트 사용")
+    inner class UseUserPoint {
+        @ParameterizedTest
+        @ValueSource(longs = [299L, 300L])
+        @DisplayName("Success - 유저포인트 사용에 성공한다.")
+        fun useUserPointSuccess(usingPoint: Long) {
+            // given
+            val initPoint = 300L
+            val userPointHaving300Point = UserPointDummies.successUserPoint.copy(point = initPoint)
+            val usedUserPoint = UserPointDummies.successUserPoint.copy(
+                point = userPointHaving300Point.point - usingPoint
+            )
+
+            `when`(userPointPort.getById(userPointHaving300Point.id)).thenReturn(userPointHaving300Point)
+            `when`(userPointPort.save(usedUserPoint)).thenReturn(usedUserPoint)
+
+            // when
+            val result = pointService.usePoint(
+                id = userPointHaving300Point.id,
+                usingPoint = usingPoint
+            )
+
+            // then
+            Assertions.assertThat(result).isEqualTo(usedUserPoint)
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = [301L, 500L])
+        @DisplayName("Fail - 사용하려는 포인트가 잔여 포인트보다 많으면 예외를 발생시킨다.")
+        fun useUserPointExceedAvailablePointFail(usingPoint: Long) {
+            // given
+            val initPoint = 300L
+            val userPointHaving300Point = UserPointDummies.successUserPoint.copy(point = initPoint)
+
+            `when`(userPointPort.getById(userPointHaving300Point.id)).thenReturn(userPointHaving300Point)
+
+            // when & then
+            assertThatThrownBy {
+                pointService.usePoint(
+                    id = userPointHaving300Point.id,
+                    usingPoint = usingPoint
+                )
+            }.isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("사용하려는 포인트가 잔여 포인트보다 클 수 없습니다.")
+        }
+
+        @ParameterizedTest
+        @ValueSource(longs = [0L, -1L])
+        @DisplayName("Fail - 사용하려는 포인트가 0보다 작거나 같으면 예외를 발생시킨다.")
+        fun useUserPointUnderAndEqualZeroPointFail(usingPoint: Long) {
+            // given
+            val initUserPoint = UserPointDummies.successUserPoint
+
+            `when`(userPointPort.getById(initUserPoint.id)).thenReturn(initUserPoint)
+
+            // when & then
+            assertThatThrownBy {
+                pointService.usePoint(
+                    id = initUserPoint.id,
+                    usingPoint = usingPoint
+                )
+            }.isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("사용하려는 포인트는 0보다 커야 합니다.")
+        }
+    }
+
 }

@@ -24,4 +24,17 @@ data class UserPoint(
             point = this.point + chargingPoint
         )
     }
+
+    fun use(usingPoint: Long): UserPoint {
+        require(usingPoint > 0) { "사용하려는 포인트는 0보다 커야 합니다." }
+        require(this.isMoreThen(usingPoint)) { "사용하려는 포인트가 잔여 포인트보다 클 수 없습니다." }
+
+        return this.copy(
+            point = this.point - usingPoint
+        )
+    }
+
+    private fun isMoreThen(point: Long): Boolean {
+        return this.point >= point
+    }
 }

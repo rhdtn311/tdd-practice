@@ -41,4 +41,22 @@ class PointService(
                 )
             }
     }
+
+    fun usePoint(
+        id: Long,
+        usingPoint: Long
+    ): UserPoint {
+        return userPointPort.getById(id = id)
+            .use(usingPoint)
+            .let { usedUserPoint -> userPointPort.save(userPoint = usedUserPoint) }
+            .also { usedUserPoint ->
+                pointHistoryPort.save(
+                    pointHistory = PointHistory.createFromUserPoint(
+                        userPoint = usedUserPoint,
+                        type = TransactionType.CHARGE,
+                        amount = usingPoint,
+                    )
+                )
+            }
+    }
 }
