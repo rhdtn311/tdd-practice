@@ -5,8 +5,7 @@
 (충전과 사용 시나리오 자체는 같기 때문에 ‘충전’인 경우로만 가정하여 설명합니다.)
 
 ### 1.1 시나리오 상세
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/65ca0ab9-55df-4434-920b-7630fa439ec9/51ae23cf-c529-4ceb-84be-88ce1392eb6e/image.png)
+![image](https://github.com/user-attachments/assets/0974ff23-5d73-47b6-87cd-76f8763352c5)
 
 초기 상태: ID 1번 사용자의 포인트 = 500
 
@@ -79,7 +78,7 @@ fun concurrencyTest() {
 - 기대값 : 500(초기포인트) + 100 * 1 = 600
 - 결과값 : 534
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/65ca0ab9-55df-4434-920b-7630fa439ec9/e3362616-f59c-4ff8-aea7-76f467078ce3/image.png)
+![image](https://github.com/user-attachments/assets/aad2fd13-6ad3-4b16-8b8c-e10fbc341dfb)
 
 ## 2. 영향도
 
@@ -171,8 +170,7 @@ fun chargeUserPointSuccessWithConcurrency() {
 ---
 
 ### 5.2 테스트 결과
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/65ca0ab9-55df-4434-920b-7630fa439ec9/7bbc72a6-5035-4a7e-b6e4-5e40ad3d1f16/image.png)
+![image](https://github.com/user-attachments/assets/7718d44e-15dc-4e19-be53-6e4f568c7c87)
 
 - **초기 상태**
     - 유저 포인트: 500
