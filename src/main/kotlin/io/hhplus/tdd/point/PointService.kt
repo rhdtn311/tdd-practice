@@ -24,6 +24,7 @@ class PointService(
         return pointHistoryPort.getAllByUserId(userId = userId)
     }
 
+    @Synchronized
     fun chargePoint(
         id: Long,
         chargingPoint: Long
@@ -42,6 +43,7 @@ class PointService(
             }
     }
 
+    @Synchronized
     fun usePoint(
         id: Long,
         usingPoint: Long
